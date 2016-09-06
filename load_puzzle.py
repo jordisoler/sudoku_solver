@@ -114,18 +114,17 @@ class Sudoku:
 
         def show(num):
             return '_' if num == 0 else str(num)
-        hline = ' ' + '|' + '-'*23 + '|\n'
+        hline = ' |' + '-'*23 + '|\n'
+        hline_middle = ' |' + '-'*7 + '+' + '-'*7 + '+' + '-'*7 + '|\n'
         out = ''
         for row, idx in zip(self.grid, range(9)):
             if idx % 3 == 0:
-                out += hline
-                # out += ' ' + '-'*25 + '\n'
+                out += hline_middle if idx != 0 else hline
             for i in range(9):
                 if i % 3 == 0:
                     out += ' |'
                 out += ' ' + show(row[i].n)
             out += ' |'
-            # out += ' '.join([str(el.n) for el in row])
             out += '\n'
         if verbosity >= 1:
             for c, idx in self:
@@ -268,7 +267,8 @@ class Sudoku:
         if alive:
             print("The sudoku has been solved! :)")
         else:
-            print("I could not find a solution :(")
+            print("I could not find a solution :(. " +
+                  "This should never happen")
 
 
 if __name__ == "__main__":
@@ -276,4 +276,3 @@ if __name__ == "__main__":
     sudoku.load('puzz1.csv')
     sudoku.solve()
     print(sudoku)
-
